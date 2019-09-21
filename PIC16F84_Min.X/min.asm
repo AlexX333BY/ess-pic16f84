@@ -11,7 +11,7 @@ START
     MOVF array_start, 0         ; WREG = array[0]
     MOVWF min_element           ; min_element = WREG
     CLRF cur_element            ; cur_element = 0
-    INCF cur_element, 0x1       ; ++cur_element
+    INCF cur_element, 1         ; ++cur_element
     
 ANALYZE
     MOVF cur_element, 0         ; WREG = cur_element
@@ -20,7 +20,7 @@ ANALYZE
     MOVF INDF, 0                ; WREG = array[cur_element]
     SUBWF min_element, 0        ; WREG = min_element - WREG
     BTFSS STATUS, 0             ; skip next command if STATUS[0] is SET
-                                ; (min_element - WREG < 0 => min_element < WREG)
+                                ; (WREG - min_element > 0 => min_element < WREG)
     GOTO NEXT
 
 SET_MIN_ELEMENT
@@ -34,8 +34,8 @@ NEXT
     INCF cur_element, 0x1       ; ++cur_element
     MOVLW array_size            ; WREG = array_size
     SUBWF cur_element, 0        ; WREG -= cur_element
-    BTFSS STATUS, 0             ; skip next command if STATUS[0] is set
-                                ; (array_size - cur_element < 0)
+    BTFSS STATUS, 0             ; skip next command if STATUS[0] is unset
+                                ; (cur_element - array_size < 0)
     GOTO ANALYZE                
 
     CLRF cur_element            ; cur_element = 0
