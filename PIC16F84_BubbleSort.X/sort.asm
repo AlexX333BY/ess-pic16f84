@@ -86,7 +86,7 @@ SORT_ASCENDING
     CLRF temp
     CLRF cur_element
     CLRF cur_limit
-    RETURN
+    GOTO FINISH
     
 SORT_DESCENDING
     CLRF cur_limit              ; cur_limit = 0
@@ -139,7 +139,7 @@ SORT_DESCENDING
     CLRF temp
     CLRF cur_element
     CLRF cur_limit
-    RETURN
+    GOTO FINISH
     
 START:
 CONFIGURE_PORTS:
@@ -151,14 +151,8 @@ CONFIGURE_PORTS:
     BCF STATUS, RP0
 BEGIN:
     BTFSS PORTA, 0
-    GOTO ASC
-    GOTO DESC
-ASC:
-    CALL SORT_ASCENDING
-    GOTO FINISH
-DESC:
-    CALL SORT_DESCENDING
-    GOTO FINISH
+    GOTO SORT_ASCENDING
+    GOTO SORT_DESCENDING
 FINISH:
     BSF PORTB, 0
 END
