@@ -1,4 +1,4 @@
-#include "p16f84.inc" 
+#include "p16f84a.inc" 
     
 array_start SET	    0x30        ; the starting address of the array, a constant
 array_size  SET	    0x14        ; the number of elements in array, a constant 
@@ -35,7 +35,7 @@ SWAP
     CLRF temp
     RETURN
     
-SORT_ASCENDING
+SORT_ASCENDING:
     MOVLW 1                     ; WREG = 1
     SUBLW array_size            ; WREG = array_size - 1
                                 ; we don't need to compare last element with next (not array element)
@@ -88,7 +88,7 @@ SORT_ASCENDING
     CLRF cur_limit
     GOTO FINISH
     
-SORT_DESCENDING
+SORT_DESCENDING:
     CLRF cur_limit              ; cur_limit = 0
     
     OUTER_DESCENDING_LOOP:
