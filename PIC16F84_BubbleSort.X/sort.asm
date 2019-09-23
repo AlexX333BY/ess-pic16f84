@@ -41,9 +41,9 @@ SORT_ASCENDING
                                 ; we don't need to compare last element with next (not array element)
     MOVWF cur_limit             ; cur_limit = WREG
     
-    OUTER_ASCENDING_LOOP
+    OUTER_ASCENDING_LOOP:
         CLRF cur_element        ; cur_element = 0
-        INNER_ASCENDING_LOOP
+        INNER_ASCENDING_LOOP:
             INCF cur_element, 0 ; WREG = cur_element + 1
             ADDLW array_start   ; WREG += array_start
             MOVWF FSR           ; FSR = WREG, INDF = array[cur_element + 1]
@@ -91,11 +91,11 @@ SORT_ASCENDING
 SORT_DESCENDING
     CLRF cur_limit              ; cur_limit = 0
     
-    OUTER_DESCENDING_LOOP
+    OUTER_DESCENDING_LOOP:
         MOVLW 1                 ; WREG = 1
         SUBLW array_size        ; WREG = array_size - 1
         MOVWF cur_element       ; cur_element = WREG
-        INNER_DESCENDING_LOOP
+        INNER_DESCENDING_LOOP:
             DECF cur_element, 0 ; WREG = cur_element - 1
             ADDLW array_start   ; WREG += array_start
             MOVWF FSR           ; FSR = WREG, INDF = array[cur_element - 1]
@@ -141,24 +141,24 @@ SORT_DESCENDING
     CLRF cur_limit
     RETURN
     
-START
-CONFIGURE_PORTS
+START:
+CONFIGURE_PORTS:
     CLRF PORTA
     CLRF PORTB
     BSF STATUS, RP0
     BSF TRISA, 0
     BCF TRISB, 0
     BCF STATUS, RP0
-BEGIN
+BEGIN:
     BTFSS PORTA, 0
     GOTO ASC
     GOTO DESC
-ASC
+ASC:
     CALL SORT_ASCENDING
     GOTO FINISH
-DESC
+DESC:
     CALL SORT_DESCENDING
     GOTO FINISH
-FINISH
+FINISH:
     BSF PORTB, 0
-end
+END
