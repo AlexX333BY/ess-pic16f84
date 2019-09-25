@@ -68,7 +68,7 @@ SORT_ASCENDING:
             
             CALL SWAP
             
-            INC_CUR_ELEMENT
+            INC_CUR_ELEMENT:
                 INCF cur_element, 1         ; ++cur_element
                 MOVF cur_limit, 0           ; WREG = cur_limit
                 SUBWF cur_element, 0        ; WREG = cur_element - cur_limit
@@ -120,7 +120,7 @@ SORT_DESCENDING:
             
             CALL SWAP
             
-            DEC_CUR_ELEMENT
+            DEC_CUR_ELEMENT:
                 DECF cur_element, 1     ; --cur_element
                 MOVF cur_element, 0     ; WREG = cur_element
                 SUBWF cur_limit, 0      ; WREG = cur_limit - cur_element
